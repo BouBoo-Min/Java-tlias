@@ -1,11 +1,18 @@
+# MyBatis Generator 配置
 spring:
   application:
+    # 应用名称
     name: tlias-web-management
   #配置数据库的连接信息
   datasource:
+    # 数据库连接URL
     url: jdbc:mysql://localhost:3306/tlias
+    # 数据库驱动类名
     driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库用户名
     username: root
+    # 数据库密码
+    password: 980312
   servlet:
     multipart:
       #最大单个文件大小
@@ -16,9 +23,12 @@ spring:
 #Mybatis的相关配置
 mybatis:
   configuration:
+    # 开启日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #开启驼峰命名映射开关
     map-underscore-to-camel-case: true
+    # 配置文件位置检查
+  check-config-location: true
 
 #配置事务管理日志级别
 logging:

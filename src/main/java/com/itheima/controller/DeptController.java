@@ -14,12 +14,18 @@ import java.util.List;
 @RestController
 public class DeptController {
 
+    //固定的写法，当前注释是因为把@Slf4j注释直接写到方法上了
+    //private static final Logger log = LoggerFactory.getLogger(DeptController.class);
+
     @Autowired
     private DeptService deptService;
 
     /**
      * 查询部门列表
      */
+    // @RequestMapping(value = "/depts", method = RequestMethod.GET) //method: 指定请求方式
+    // @GetMapping("/depts")
+    // @GetMapping  是因为把@RequestMapping("/depts")放到了当前方法上, 所以不需要再写@RequestMapping("/depts")了
     @GetMapping
     public Result list(){
         //System.out.println("查询全部部门数据");
@@ -29,6 +35,31 @@ public class DeptController {
     }
 
     /**
+     * 根据ID删除部门
+     */
+    /**
+     * 删除部门 - 方式一: HttpServletRequest 获取请求参数
+     */
+    /*@DeleteMapping("/depts")
+    public Result delete(HttpServletRequest request){
+        String idStr = request.getParameter("id");
+        int id = Integer.parseInt(idStr);
+        System.out.println("根据ID删除部门: " + id);
+        return Result.success();
+    }*/
+
+
+    /**
+     * 删除部门 - 方式二: @RequestParam
+     * 注意事项: 一旦声明了@RequestParam, 该参数在请求时必须传递, 如果不传递将会报错. (默认 required 为 true)
+     */
+   /* @DeleteMapping("/depts")
+    public Result delete(@RequestParam(value = "id", required = false) Integer deptId){
+        System.out.println("根据ID删除部门: " + deptId);
+        return Result.success();
+    }*/
+    /**
+     * 删除部门 - 方式三: 省略@RequestParam (前端传递的请求参数名与服务端方法形参名一致) [推荐]
      */
     @Log
     @DeleteMapping
@@ -54,6 +85,16 @@ public class DeptController {
     /**
      * 根据ID查询部门
      */
+    /*@GetMapping("/depts/{id}")
+    public Result getInfo(@PathVariable("id") Integer deptId){
+        System.out.println("根据ID查询部门 : " + deptId);
+        return Result.success();
+    }*/
+
+    /**
+     * 根据ID查询部门
+     */
+    // 这里@GetMapping后面加{id}表示路径变量，是因为id是路径的一部分,属于二级路径，例如: /depts/1
     @GetMapping("/{id}")
     public Result getInfo(@PathVariable Integer id){
         //System.out.println("根据ID查询部门 : " + id);
